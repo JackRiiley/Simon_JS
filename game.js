@@ -5,8 +5,13 @@ let userClickedPattern = [];
 $(".btn").click(function () {
     let userChosenColour = $(this).attr("id");
     userClickedPattern.push(userChosenColour);
-    console.log(userClickedPattern);
+    playSound(userChosenColour);
 })
+
+function playSound(name) {
+    let audio = new Audio("sounds/" + name + ".mp3");
+    audio.play();
+}
 
 function nextSequence() {
 
@@ -14,20 +19,16 @@ function nextSequence() {
     // This is then used to select a random value from array 'buttonColours'
     let randomNumber = Math.floor(Math.random() * 4);
     let randomChosenColour = buttonColours[randomNumber];
-    console.log(randomChosenColour);
 
     // This is then pushed onto the gamePattern array
     gamePattern.push(randomChosenColour);
-    console.log(gamePattern);
 
     // Used jQuery to select the HTML element that is the same colour
     // Used jQuery to add a simple animation to the button to let the 
     // user know which button is selected.
     let selectedBtn = $("#" + randomChosenColour);
     selectedBtn.fadeIn(100).fadeOut(100).fadeIn(100);
-
-    let audio = new Audio("sounds/" + randomChosenColour + ".mp3");
-    audio.play();
+    playSound(selectedBtn);
 }
 
 nextSequence();
