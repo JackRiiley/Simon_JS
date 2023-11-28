@@ -8,10 +8,11 @@ let started = false;
 // Detects when a key has been pressed to start the game
 $(document).keypress(function () {
     if (!started) {
+        $("#level-title").text("Level " + level);
         nextSequence();
+        started = true;
     }
 
-    $("#level-title").text("Level " + level);
 })
 
 // Detects when a button has been clicked in the browser, this is stored
@@ -22,24 +23,34 @@ $(".btn").click(function () {
     playSound(userChosenColour);
     animatePress(userChosenColour);
     checkAnswer(userClickedPattern.length - 1);
-})
+});
+
+// Handles restarting the game
+function startOver() {
+    level = 0;
+    gamePattern = [];
+    started = false;
+}
 
 // Handles checking the userPattern to the gamePattern
 function checkAnswer(currentLevel) {
-    if (userClickedPattern[userClickedPattern.length - 1] === gamePattern[gamePattern.length - 1]) {
+    if (gamePattern[currentLevel] === userClickedPattern[currentLevel]) {
         if(userClickedPattern.length === gamePattern.length) {
             setTimeout(function () {
                 nextSequence();
             }, 1000);
-            userClickedPattern = [];
         }
     } else {
         playSound("wrong");
         $("#level-title").text("Game Over, Press Any Key to Restart");
         $("body").addClass("game-over");
+
         setTimeout(function () {
             $("body").removeClass("game-over")
         }, 200);
+
+        startOver();
+
     }
 }
 
@@ -59,9 +70,10 @@ function playSound(name) {
 }
 
 function nextSequence() {
-
+    // Resets the user pattern and changes the level
+    userClickedPattern = [];
     level++;
-    started = true;
+    $("#level-title").text("Level " + level);
 
     // Creates a random number between 0 - 3
     // This is then used to select a random value from array 'buttonColours'
@@ -77,5 +89,4 @@ function nextSequence() {
     $("#" + randomChosenColour).fadeIn(100).fadeOut(100).fadeIn(100);
     playSound(randomChosenColour);
 
-    $("#level-title").text("Level " + level);
 }
