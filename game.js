@@ -18,6 +18,9 @@ function nextSequence() {
     // user know which button is selected.
     let selectedBtn = $("#" + randomChosenColour);
     selectedBtn.fadeIn(100).fadeOut(100).fadeIn(100);
+
+    let audio = new Audio("sounds/" + randomChosenColour + ".mp3");
+    audio.play();
 }
 
 nextSequence();
