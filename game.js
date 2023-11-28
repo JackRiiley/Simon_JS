@@ -6,7 +6,15 @@ $(".btn").click(function () {
     let userChosenColour = $(this).attr("id");
     userClickedPattern.push(userChosenColour);
     playSound(userChosenColour);
+    animatePress(userChosenColour);
 })
+
+function animatePress(currentColour) {
+    $("#" + currentColour).addClass("pressed");
+    setTimeout(function () {
+        $("#" + currentColour).removeClass("pressed");
+    }, 100);
+}
 
 function playSound(name) {
     let audio = new Audio("sounds/" + name + ".mp3");
