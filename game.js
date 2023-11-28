@@ -2,6 +2,17 @@ let buttonColours = ["red", "blue", "green", "yellow"];
 let gamePattern = [];
 let userClickedPattern = [];
 
+let level = 0;
+let started = false;
+
+$(document).keypress(function () {
+    if (!started) {
+        nextSequence();
+    }
+
+    $("#level-title").text("Level " + level);
+})
+
 $(".btn").click(function () {
     let userChosenColour = $(this).attr("id");
     userClickedPattern.push(userChosenColour);
@@ -23,6 +34,9 @@ function playSound(name) {
 
 function nextSequence() {
 
+    level++;
+    started = true;
+
     // Creates a random number between 0 - 3
     // This is then used to select a random value from array 'buttonColours'
     let randomNumber = Math.floor(Math.random() * 4);
@@ -34,9 +48,8 @@ function nextSequence() {
     // Used jQuery to select the HTML element that is the same colour
     // Used jQuery to add a simple animation to the button to let the 
     // user know which button is selected.
-    let selectedBtn = $("#" + randomChosenColour);
-    selectedBtn.fadeIn(100).fadeOut(100).fadeIn(100);
-    playSound(selectedBtn);
-}
+    $("#" + randomChosenColour).fadeIn(100).fadeOut(100).fadeIn(100);
+    playSound(randomChosenColour);
 
-nextSequence();
+    $("#level-title").text("Level " + level);
+}
