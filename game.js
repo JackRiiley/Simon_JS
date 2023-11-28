@@ -13,7 +13,11 @@ function nextSequence() {
     gamePattern.push(randomChosenColour);
     console.log(gamePattern);
 
-
+    // Used jQuery to select the HTML element that is the same colour
+    // Used jQuery to add a simple animation to the button to let the 
+    // user know which button is selected.
+    let selectedBtn = $("#" + randomChosenColour);
+    selectedBtn.fadeIn(100).fadeOut(100).fadeIn(100);
 }
 
 nextSequence();
