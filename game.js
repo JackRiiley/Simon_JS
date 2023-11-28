@@ -34,7 +34,12 @@ function checkAnswer(currentLevel) {
             userClickedPattern = [];
         }
     } else {
-        
+        playSound("wrong");
+        $("#level-title").text("Game Over, Press Any Key to Restart");
+        $("body").addClass("game-over");
+        setTimeout(function () {
+            $("body").removeClass("game-over")
+        }, 200);
     }
 }
 
